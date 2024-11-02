@@ -1,6 +1,15 @@
 # Django framework
 Django>=5.0,<5.2
 
+# Django rest framework
+djangorestframework
+
+# CORS security
+django-cors-headers
+
+# YAML parsing
+pyyaml
+
 # Managing environment
 python-decouple
 
