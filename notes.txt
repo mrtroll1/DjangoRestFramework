@@ -2,4 +2,6 @@ Django Rest Framework
 
 1. Setup the environment, project, git.
 2. Define a basic API view with JsonResponse
-3. 
+3. Django model instance as an API response
+    a. 'Manual' model --> dict --> JSON
+    b. Use Serializers
