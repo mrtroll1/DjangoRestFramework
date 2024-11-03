@@ -5,3 +5,12 @@ Django Rest Framework
 3. Django model instance as an API response
     a. 'Manual' model --> dict --> JSON
     b. Use Serializers
+4. Explore different way to define views
+    a. 'Manually' as functions
+    b. As functions that combine methods
+    c. As classes inheriting generics and mixins
+5. Authentication-required views, permissions
+    a. Use sessions authentication and define custom permissions
+    b. Implement token authetication 
+    c. Override rest_framework default Token model and obtain_token_view to use ExpiringToken 
+    d. Create a custom expiringtoken app that overrides rest_framewrok.authtoken 

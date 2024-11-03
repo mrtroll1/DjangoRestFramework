@@ -1,4 +1,4 @@
-from rest_framework import generics, mixins
+from rest_framework import generics, mixins, permissions, authentication
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
@@ -6,10 +6,18 @@ from django.shortcuts import get_object_or_404
 
 from .models import Product
 from .serializers import ProductSerializer
+from .permissions import IsSatffEditorPermission
+from api.authentication import TokenAuthentication, ExpiringTokenAuthentication
 
 class ProductListCreateAPIView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    authentication_classes = [
+        authentication.SessionAuthentication, 
+        # TokenAuthentication, # Our overriden version of the built-in class with that name
+        ExpiringTokenAuthentication # With a new ExpiringToken model underneath it
+    ] 
+    permission_classes = [permissions.IsAuthenticated, IsSatffEditorPermission]
 
     def perform_create(self, serializer):
         # serializer.save(user=self.request.user)
