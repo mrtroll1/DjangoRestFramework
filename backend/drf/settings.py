@@ -128,10 +128,25 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Rest Framework config
+from datetime import timedelta
+
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
         'api.authentication.ExpiringTokenAuthentication',  
-    ),
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly', # Only GET to everyone
+    ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ],
 }
 
 REST_FRAMEWORK_TOKEN_MODEL = 'api.ExpiringToken'
+
+TOKEN_EXPIRATION_TIME = timedelta(minutes=5)
+
+# url domain
+BASE_URL = 'http://127.0.0.1:8000/'

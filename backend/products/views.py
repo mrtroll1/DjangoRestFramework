@@ -1,52 +1,49 @@
-from rest_framework import generics, mixins, permissions, authentication
+from rest_framework import generics, mixins, serializers
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 from django.shortcuts import get_object_or_404
 
 from .models import Product
-from .serializers import ProductSerializer
-from .permissions import IsSatffEditorPermission
-from api.authentication import TokenAuthentication, ExpiringTokenAuthentication
+from .serializers import ProductSerializer, ProductDetailSerializer
+from api.mixins import StaffEditorPermissionMixin
 
-class ProductListCreateAPIView(generics.ListCreateAPIView):
+class ProductListCreateAPIView(StaffEditorPermissionMixin, generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    authentication_classes = [
-        authentication.SessionAuthentication, 
-        # TokenAuthentication, # Our overriden version of the built-in class with that name
-        ExpiringTokenAuthentication # With a new ExpiringToken model underneath it
-    ] 
-    permission_classes = [permissions.IsAuthenticated, IsSatffEditorPermission]
+    # These were set as deafult in the settings
+    # authentication_classes = [
+    #     authentication.SessionAuthentication, 
+    #     # TokenAuthentication, # Our overriden version of the built-in class with that name
+    #     ExpiringTokenAuthentication # With a new ExpiringToken model underneath it
+    # ] 
 
     def perform_create(self, serializer):
         # serializer.save(user=self.request.user)
+        email = serializer.validated_data.pop('email')
         title = serializer.validated_data.get('title')
         content = serializer.validated_data.get('content') or None
         if content is None: 
             content = title
-        serializer.save(content=content)
+        serializer.save(content=content) # from.save() model.save()
 
 product_list_create_view = ProductListCreateAPIView.as_view()
 
-class ProductDetailAPIView(generics.RetrieveAPIView):
+class ProductDetailAPIView(StaffEditorPermissionMixin, generics.RetrieveAPIView):
     queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+    serializer_class = ProductDetailSerializer
     # lookup_filed = 'pk' 
 
 product_detail_view = ProductDetailAPIView.as_view()
 
-class ProductUpdateAPIView(generics.UpdateAPIView):
+class ProductUpdateAPIView(StaffEditorPermissionMixin, generics.UpdateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     lookup_filed = 'pk' # that is default value anyway
- 
-    def perform_update(self, serializer):
-        instance = serializer.save() 
 
 product_update_view = ProductUpdateAPIView.as_view()
 
-class ProductDeleteAPIView(generics.DestroyAPIView):
+class ProductDeleteAPIView(StaffEditorPermissionMixin, generics.DestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     # lookup_filed = 'pk' 
@@ -61,6 +58,7 @@ product_delete_view = ProductDeleteAPIView.as_view()
 # A combined class view for the views above
 # Maybe not the best way to go but still cool (can always look-up class definitions with Vs Code --> Go to Definition)
 class ProductMixinView(
+                    StaffEditorPermissionMixin,
                     mixins.ListModelMixin, 
                     mixins.RetrieveModelMixin, 
                     mixins.CreateModelMixin,

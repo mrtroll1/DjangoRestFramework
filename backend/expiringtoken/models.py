@@ -35,7 +35,7 @@ class ExpiringToken(models.Model):
             self.key = self.generate_key()
             self.created = timezone.now()
         if not self.expires:
-            self.expires = self.created + timedelta(minutes=5)
+            self.expires = self.created + settings.TOKEN_EXPIRATION_TIME
         super().save(*args, **kwargs)
 
     def is_expired(self):

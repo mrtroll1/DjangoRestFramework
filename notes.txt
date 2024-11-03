@@ -14,3 +14,9 @@ Django Rest Framework
     b. Implement token authetication 
     c. Override rest_framework default Token model and obtain_token_view to use ExpiringToken 
     d. Create a custom expiringtoken app that overrides rest_framewrok.authtoken 
+6. Use mixins for permissions
+7. Viewsets and routers
+8. Serializers
+    a. Add a url (get / retrieve) attribute to every product
+    b. Add an email write-only field (not to be stored in the model)
+    c. Custom validation

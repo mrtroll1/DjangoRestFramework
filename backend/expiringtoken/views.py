@@ -59,8 +59,12 @@ class ObtainExpiringAuthToken(APIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         token, created = ExpiringToken.objects.get_or_create(user=user)
-        return Response({'token': token.key})
 
+        if token.is_expired():
+            token.delete()
+            token = ExpiringToken.objects.create(user=user)
+
+        return Response({'token': token.key})
 
 obtain_expiring_auth_token = ObtainExpiringAuthToken.as_view()
 

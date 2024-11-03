@@ -22,7 +22,7 @@ class ExpiringTokenChangeList(ChangeList):
 
 
 class ExpiringTokenAdmin(admin.ModelAdmin):
-    list_display = ('key', 'user', 'created')
+    list_display = ('key', 'user', 'created', 'expires')
     fields = ('user',)
     search_fields = ('user__username',)
     search_help_text = _('Username')
