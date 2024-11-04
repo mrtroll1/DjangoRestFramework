@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     # "rest_framework.authtoken",
     "expiringtoken",
     "api",
-    "products"
+    "products",
+    "search",
 ]
 
 MIDDLEWARE = [
@@ -142,6 +143,8 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
     ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 3
 }
 
 REST_FRAMEWORK_TOKEN_MODEL = 'api.ExpiringToken'
@@ -150,3 +153,4 @@ TOKEN_EXPIRATION_TIME = timedelta(minutes=5)
 
 # url domain
 BASE_URL = 'http://127.0.0.1:8000/'
+

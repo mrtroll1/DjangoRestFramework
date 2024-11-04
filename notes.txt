@@ -19,4 +19,8 @@ Django Rest Framework
 8. Serializers
     a. Add a url (get / retrieve) attribute to every product
     b. Add an email write-only field (not to be stored in the model)
-    c. Custom validation
+    c. Custom validation (use model validators if request data is not relevant)
+    d. Nested serialized data
+9. Pagination
+10. Search
+    a. 'Manually' with a separate django app (separate views)
