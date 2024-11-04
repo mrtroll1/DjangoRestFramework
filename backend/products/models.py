@@ -11,7 +11,7 @@ class ProductQuerySet(models.QuerySet):
         return self.filter(public=True)
     
     def search(self, query, user):
-        lookup = Q(title_icontains=query) | Q(content_icontains=query)
+        lookup = Q(title__icontains=query) | Q(content__icontains=query)
         qs = self.is_public().filter(lookup)
         if user is not None: # add private data to qs that matches the query
             qs2 = qs.filter(user=user).filter(lookup)

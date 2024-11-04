@@ -24,3 +24,4 @@ Django Rest Framework
 9. Pagination
 10. Search
     a. 'Manually' with a separate django app (separate views)
+    b. Build search engine with Algolia
