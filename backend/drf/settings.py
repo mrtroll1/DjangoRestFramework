@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "algoliasearch_django",
     # "rest_framework.authtoken",
     "expiringtoken",
     "api",
@@ -154,3 +156,9 @@ TOKEN_EXPIRATION_TIME = timedelta(minutes=5)
 # url domain
 BASE_URL = 'http://127.0.0.1:8000/'
 
+# Algolia Search API
+ALGOLIA = {
+  'APPLICATION_ID': config('ALGOLIA_APPLICATION_ID', cast=str, default=None),
+  'API_KEY': config('ALGOLIA_API_KEY', cast=str, default=None),
+  'INDEX_PREFIX': 'drf',
+}
