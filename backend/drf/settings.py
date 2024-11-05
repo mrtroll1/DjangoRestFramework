@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 from decouple import config
+import datetime
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "rest_framework_simplejwt",
     "algoliasearch_django",
     # "rest_framework.authtoken",
     "expiringtoken",
@@ -136,7 +138,8 @@ from datetime import timedelta
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
-        'api.authentication.ExpiringTokenAuthentication',  
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # 'api.authentication.ExpiringTokenAuthentication',  
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly', # Only GET to everyone
@@ -161,4 +164,11 @@ ALGOLIA = {
   'APPLICATION_ID': config('ALGOLIA_APPLICATION_ID', cast=str, default=None),
   'API_KEY': config('ALGOLIA_API_KEY', cast=str, default=None),
   'INDEX_PREFIX': 'drf',
+}
+
+# SimpleJWT token auth
+SIMPLE_JWT = {
+    "AUTH_HEADER_TYPES": ["Bearer"], # = default
+    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(seconds=30), # typically hours = 1
+    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(minutes=1), # days = 1
 }

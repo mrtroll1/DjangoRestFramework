@@ -12,6 +12,7 @@ class ProductIndex(AlgoliaIndex):
     fields = [
         'pk',
         'title',
+        # 'url', # has to be a field of Product model
         'content',
         'price',
         'user',

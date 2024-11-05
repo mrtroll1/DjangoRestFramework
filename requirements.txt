@@ -3,6 +3,7 @@ Django>=5.0,<5.2
 
 # Django rest framework
 djangorestframework
+djangorestframework-simplejwt
 
 # CORS security
 django-cors-headers

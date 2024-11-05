@@ -23,6 +23,7 @@ class ProductSerializer(serializers.ModelSerializer):
             'user',
             'content',
             'price',
+            'public',
             'email',
         ]
 
@@ -74,6 +75,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
             'owner',
             'content',
             'price',
+            'public',
             'sale_price',
             'my_discount',
         ]
