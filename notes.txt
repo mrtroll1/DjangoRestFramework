@@ -5,7 +5,7 @@ Django Rest Framework
 3. Django model instance as an API response
     a. 'Manual' model --> dict --> JSON
     b. Use Serializers
-4. Explore different way to define views
+4. Explore different ways to define views
     a. 'Manually' as functions
     b. As functions that combine methods
     c. As classes inheriting generics and mixins
@@ -25,3 +25,4 @@ Django Rest Framework
 10. Search
     a. 'Manually' with a separate django app (separate views)
     b. Build search engine with Algolia (integrate external API service)
+        - Create a python client to request searches (inside search app)

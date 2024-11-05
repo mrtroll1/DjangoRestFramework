@@ -8,11 +8,17 @@ from.models import Product
 # Run angolia_reindex management command for changes to this class to take effect
 @register(Product)
 class ProductIndex(AlgoliaIndex):
-    should_index = 'is_public' # Changes to is_public field of records immideately reflect on the Algolia side
+    # should_index = 'is_public' # Changes to is_public field of records immideately reflect on the Algolia side
     fields = [
+        'pk',
         'title',
         'content',
         'price',
         'user',
         'public'
     ]
+    settings = {
+        'searchableAttributes': ['title', 'content', 'tags'],
+        'attributesForFaceting': ['public', 'user']
+    }
+    tags = 'get_tags_list' # to be used with algolia's built-in 'tags' search filter
