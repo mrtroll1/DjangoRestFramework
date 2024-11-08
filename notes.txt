@@ -27,3 +27,8 @@ Django Rest Framework
     b. Build search engine with Algolia (integrate external API service)
         - Create a python client to request searches (inside search app)
 11. JSON WEB token auth with simplejwt
+12. Login with JavaScript Client
+    a. Define a js_client to be served on a different product
+    b. Solve CORS blocking issue with django cors headers package
+    c. Use JWT with JavaScript client
+13. Implement Algolia Search for a JS client

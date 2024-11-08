@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 import json
 from django.forms.models import model_to_dict
+from django.conf import settings
 
 from products.models import Product
 from products.serializers import ProductSerializer
@@ -30,6 +31,20 @@ def api_home_get(request, *args, **kwargs):
     if instance:
         data = ProductSerializer(instance).data
     return Response(data)
+
+@api_view(["GET"])
+def get_algolia_tokens(request, *args, **kwargs):
+    """
+    Endpoint to serve algolia App ID and Search-only token
+    """
+    algolia_app_id = settings.ALGOLIA['APPLICATION_ID']
+    algolis_search_only_api_key = settings.ALGOLIA_SEARCH_ONLY_API_KEY
+    data = {
+        'AppID': algolia_app_id,
+        'ApiKey': algolis_search_only_api_key
+    }
+    return Response(data)
+
     
 
 def model_api_home(request, *args, **kwargs):
